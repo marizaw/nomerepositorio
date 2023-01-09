@@ -1,0 +1,117 @@
+Algoritmo "Blaze"
+// Disciplina   : Logica de programação
+// Professor   : Thiago Gadotti
+//O usuário é um apostador da Blaze
+//Deve pegar as informações de nome e saldo atual do apostador
+//E pedir em qual cor ele quer apostar
+//Vermelho, preto ou branco
+//Apoia isso, uma contagem regressiva vai acontecer de 5 a 0
+//(Use a função timer() pra fazer os segundos)
+//Ao chegar a 0
+//A máquina revela o resultado
+//Se o jogador acertou no vermelho ou preto, ganha 2x o valor apostador
+//Se foi no branco, ganha 11x o valor n fun
+//Se perdeu, perde a aposta
+//Dps de cada aposta , pgtar se quer continuar, quando o jogador parar
+//Aparece as informações de
+//Lucro, total apostado e quantas apostas
+Var
+   nome, r : caractere
+   saldo, valor, ganhaver, ganhapre,ganhabra, apos, lucro, perda : real
+   cor,coresc, dese, nov, cont : inteiro
+procedimento topo()
+inicio
+  // timer(500)
+   escreval("+=+=+=+=+=+=+=+=+=+=")
+   escreval("     B L A Z E      ")
+   escreval("+=+=+=+=+=+=+=+=+=+=")
+fimprocedimento
+
+funcao aposta (coresc, cor: inteiro) : caractere
+inicio
+   se (coresc = cor) entao
+      retorne " Parabéns, você acertou!"
+   senao
+      retorne " Eita, essa você perdeu!"
+   fimse
+fimfuncao
+
+procedimento final (apos, cont , lucro, perda: real)
+inicio
+   escreval (" seu lucro final foi de: ", lucro)
+   escreval (" você apostou ", cont, " vezes")
+   escreval (" o total que você apostou foi ", apos)
+   escreval (" suas perdas foram : ", perda)
+fimprocedimento
+
+Inicio
+
+   topo()
+   escreval(" qual o seu nome?")
+   leia (nome)
+   escreval(" qual seu saldo bancario?")
+   leia (saldo)
+   repita
+    se (saldo = 0) entao
+     escreval(" sem dinheiro, vai trabalhar")
+        fimalgoritmo
+   fimse
+      escreval(" deseja apostar? [1]sim [2]não")
+      leia(dese)
+   ate (dese = 1) ou (dese = 2)
+   repita
+      se (dese = 1) entao
+         cont := cont +1
+         repita
+            escreval("qual valor deseja apostar?")
+            leia(valor)
+            apos:= apos + valor
+         ate ( saldo >= valor )
+      senao
+         se (dese = 2) entao
+            escreval(" Que diabos você est5á fazendo aqui?")
+            fimalgoritmo
+         senao
+            se (dese <> 1) e (dese <> 2) entao
+               escreval (" Porra sabe ler não?")
+            fimse
+         fimse
+      fimse
+       repita
+      escreval(" qual cor deseja apostar[0]Vermelho [1]preto [2]branco)")
+      leia(cor)
+       ate (( cor = 0) ou (cor = 1) ou ( cor = 2))
+      coresc := randi(2)
+      r := aposta(coresc, cor)
+      escreval(r)
+      ganhaver := saldo + (valor * 2)
+      ganhapre := saldo + (valor * 2)
+      ganhabra := saldo + (valor * 11)
+      se( coresc = 0 ) e ( cor = 0) entao
+         escreval("você ira receber ", valor* 2)
+         saldo := ganhaver
+         lucro := lucro + ( valor * 2)
+      senao
+         se( coresc = 1 ) e ( cor = 1) entao
+            escreval("você ira receber ", valor* 2)
+            saldo := ganhapre
+            lucro := lucro + ( valor * 2)
+         senao
+            se( coresc = 2 ) e ( cor = 2) entao
+               escreval("você ira receber ", valor* 2)
+               saldo := ganhabra
+               lucro := lucro + ( valor * 11)
+            fimse
+         fimse
+      fimse
+      se (coresc <> cor) entao
+         saldo := saldo - valor
+         perda := perda + ( valor)
+      fimse
+      escreval(" seu saldo atual é: ", saldo)
+      escreval(" deseja apostar novamente [1]sim [2] não")
+      leia(nov)
+   ate (nov = 2)
+   final (apos, cont , lucro, perda)
+
+Fimalgoritmo
